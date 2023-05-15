@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PlantPlanner_v1</string>
+    <string name="title_activity_indoor_plants">IndoorPlants</string>
+    <string name="title_activity_garden_plants">GardenPlants</string>
+</resources>
