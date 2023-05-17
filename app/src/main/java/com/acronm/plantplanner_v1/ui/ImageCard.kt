@@ -1,4 +1,4 @@
-package com.acronm.plantplanner_v1
+package com.acronm.plantplanner_v1.ui
 
 import android.content.Context
 import android.content.Intent

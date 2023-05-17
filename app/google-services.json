@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "912329028210",
+    "project_id": "plantplanner-88ca5",
+    "storage_bucket": "plantplanner-88ca5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912329028210:android:8a55d7fd98fa981ecd08eb",
+        "android_client_info": {
+          "package_name": "com.acronm.plantplanner_v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912329028210-735mgc2gret4vg1dh4bfjn86valh8795.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXbY7f20q-eagaQC7JSqIXgEEM0pMoDdQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912329028210-735mgc2gret4vg1dh4bfjn86valh8795.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

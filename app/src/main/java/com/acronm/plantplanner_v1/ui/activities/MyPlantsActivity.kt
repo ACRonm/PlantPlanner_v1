@@ -1,4 +1,4 @@
-package com.acronm.plantplanner_v1
+package com.acronm.plantplanner_v1.ui.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -42,7 +42,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.room.Room
 import com.acronm.plantplanner_v1.database.AppDatabase
 import com.acronm.plantplanner_v1.database.Plants
 import com.acronm.plantplanner_v1.ui.theme.PlantPlanner_v1Theme
