@@ -51,6 +51,7 @@ fun ImageCard(
         onClick = { /*TODO*/
             //navigate to IndoorPlants screen
             val intent = Intent(navController.context, destinationActivity)
+
             navController.context.startActivity(intent)
         }
     ) {

@@ -25,7 +25,6 @@ data class Plants(
     val image: String,
     val createdTimeStamp: Long,
     val modifiedTimestamp: Long
-
 )
 
 @Dao
