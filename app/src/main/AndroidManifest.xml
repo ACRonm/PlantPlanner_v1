@@ -20,12 +20,12 @@
             android:label="@string/title_activity_garden_plants"
             android:theme="@style/Theme.PlantPlanner_v1" />
         <activity
-            android:name=".ui.activities.IndoorPlants"
+            android:name=".ui.myplants.MyPlants"
             android:exported="false"
             android:label="@string/title_activity_indoor_plants"
             android:theme="@style/Theme.PlantPlanner_v1" />
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.Main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.PlantPlanner_v1" >

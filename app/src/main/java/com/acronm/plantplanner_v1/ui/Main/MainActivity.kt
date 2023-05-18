@@ -1,4 +1,4 @@
-package com.acronm.plantplanner_v1.ui.activities
+package com.acronm.plantplanner_v1.ui.Main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -26,6 +26,7 @@ import com.acronm.plantplanner_v1.GardenPlants
 import com.acronm.plantplanner_v1.R
 import com.acronm.plantplanner_v1.network.api.PlantApiService
 import com.acronm.plantplanner_v1.ui.ImageCard
+import com.acronm.plantplanner_v1.ui.myplants.MyPlants
 import com.acronm.plantplanner_v1.ui.theme.PlantPlanner_v1Theme
 
 class MainActivity : ComponentActivity() {
