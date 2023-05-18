@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -32,21 +33,23 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.acronm.plantplanner_v1.database.AppDatabase
 import com.acronm.plantplanner_v1.database.Plants
 import com.acronm.plantplanner_v1.ui.theme.PlantPlanner_v1Theme
-class IndoorPlants : ComponentActivity() {
-    private lateinit var database: AppDatabase // Assuming your database class is named AppDatabase
+class MyPlants : ComponentActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,10 +80,14 @@ class IndoorPlants : ComponentActivity() {
                                 )
                             }
                             if (expandedState.value) {
-                                PlantForm(onSavePlant = {
-                                    expandedState.value = false
-                                    // TODO: Save the plant data
-                                })
+                                PlantForm(
+                                    onSavePlant = {
+                                        expandedState.value = false
+                                    },
+                                    onDismiss = {
+                                        expandedState.value = false
+                                    }
+                                )
                             }
                         },
                         topBar = {
@@ -105,29 +112,30 @@ class IndoorPlants : ComponentActivity() {
                         }
                     ) { paddingValues ->
                         LazyColumn(modifier = Modifier.padding(paddingValues)) {
-
+                            item {
+                            }
                         }
                     }
                 }
             }
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlantForm(onSavePlant: (Plants) -> Unit) {
+fun PlantForm(onSavePlant: (Plants) -> Unit, onDismiss: () -> Unit) {
     val id = remember { mutableStateOf(0) }
     val name = remember { mutableStateOf("") }
     val description = remember { mutableStateOf("") }
     val wateringInterval = remember { mutableStateOf("") }
     val sunlight = remember { mutableStateOf("") }
     val image = remember { mutableStateOf("") }
+
     Dialog(
-        onDismissRequest = { },
-        properties = DialogProperties(dismissOnBackPress = true)
-    ) {
+        onDismissRequest = {
+                           onDismiss()
+        }) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.large
@@ -207,6 +215,21 @@ fun PlantForm(onSavePlant: (Plants) -> Unit) {
     }
 }
 
+@Composable
+fun PlantItem(plant: Plants) {
+    // Composable to display an individual plant item
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.large
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = plant.name, style = MaterialTheme.typography.titleLarge)
+            Text(text = plant.description, style = MaterialTheme.typography.bodyMedium)
+        }
+    }
+}
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropDownMenuUi() {
@@ -247,11 +270,13 @@ fun DropDownMenuUi() {
     }
 }
 
+
+
 @Preview
 @Composable
 
 fun PreviewPlantForm() {
     PlantPlanner_v1Theme {
-        PlantForm(onSavePlant = {})
+        PlantForm(onSavePlant = {}, onDismiss = {})
     }
 }

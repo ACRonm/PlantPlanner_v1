@@ -1,8 +1,6 @@
 package com.acronm.plantplanner_v1.ui.activities
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,7 +27,6 @@ import com.acronm.plantplanner_v1.R
 import com.acronm.plantplanner_v1.network.api.PlantApiService
 import com.acronm.plantplanner_v1.ui.ImageCard
 import com.acronm.plantplanner_v1.ui.theme.PlantPlanner_v1Theme
-import java.util.Properties
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +79,7 @@ fun CardLayout() {
                                 imageResourceId = R.drawable.monstera,
                                 modifier = Modifier.padding(16.dp),
                                 navController = navController,
-                                destinationActivity = IndoorPlants::class.java
+                                destinationActivity = MyPlants::class.java
                             )
                         }
                     items(1) {
@@ -93,7 +90,6 @@ fun CardLayout() {
                             modifier = Modifier.padding(16.dp),
                             navController = navController,
                             destinationActivity = GardenPlants::class.java
-
                         )
                         }
                     }
