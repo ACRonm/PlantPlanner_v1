@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.acronm.plantplanner_v1.GardenPlants
 import com.acronm.plantplanner_v1.R
-import com.acronm.plantplanner_v1.network.api.PlantApiService
+import com.acronm.plantplanner_v1.network.api.TrefelApi
 import com.acronm.plantplanner_v1.ui.ImageCard
 import com.acronm.plantplanner_v1.ui.myplants.MyPlants
 import com.acronm.plantplanner_v1.ui.theme.PlantPlanner_v1Theme
@@ -33,8 +33,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PlantApiService.ConfigManager.getApiKey(this)
-
             PlantPlanner_v1Theme {
                 CardLayout()
                 }

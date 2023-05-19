@@ -1,5 +1,8 @@
 package com.acronm.plantplanner_v1.ui.myplants
 
+import RetrofitClient
+import RetrofitClient.trefelApi
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -19,7 +22,6 @@ import androidx.compose.material.icons.Icons.Outlined
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -34,9 +36,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -47,17 +46,26 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.ViewModelProvider
+import com.acronm.plantplanner_v1.config.ConfigManager
 import com.acronm.plantplanner_v1.database.AppDatabase
+import com.acronm.plantplanner_v1.model.PlantResponse
 import com.acronm.plantplanner_v1.ui.theme.PlantPlanner_v1Theme
-
+import com.acronm.plantplanner_v1.model.TrefelPlant
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MyPlants : ComponentActivity() {
+
+    private val context: Context = this
 
     private lateinit var viewModel: MyPlantsViewModel
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        searchPlant(context = context, query = "coconut")
 
         viewModel = ViewModelProvider(this)[MyPlantsViewModel::class.java]
 
@@ -101,7 +109,7 @@ class MyPlants : ComponentActivity() {
                                 Spacer(modifier = Modifier.height(16.dp))
                             }
                             items(plants.orEmpty()) { plant ->
-                                Row() {
+                                Row {
                                     Text(text = plant.name)
                                     IconButton(onClick = {
                                         viewModel.deletePlant(plant)
@@ -306,6 +314,34 @@ fun PlantForm(onSavePlant: (AppDatabase.Plant) -> Unit, onDismiss: () -> Unit, v
     }
 }
 
+fun searchPlant(context: Context, query: String) {
+    val apiKey = ConfigManager.getApiKey(context)
+    Log.d("SearchPlant", "Api key: $apiKey")
+
+    val call: Call<PlantResponse> = trefelApi.searchPlantsFromApi(apiKey, query)
+
+    call.enqueue(object : Callback<PlantResponse> {
+        override fun onResponse(
+            call: Call<PlantResponse>,
+            response: Response<PlantResponse>
+        ) {
+            if (response.isSuccessful) {
+                val plantResponse: PlantResponse? = response.body()
+                val plants: List<TrefelPlant>? = plantResponse?.data
+                Log.d("API Response", response.body().toString())
+                Log.d("SearchPlant", "plants: $plants")
+            } else {
+                val statusCode: Int = response.code()
+
+                Log.d("SearchPlant", "statusCode: $statusCode")
+            }
+        }
+
+        override fun onFailure(call: Call<PlantResponse>, t: Throwable) {
+            Log.d("SearchPlant", "onFailure: $t")
+        }
+    })
+}
 
 
 
