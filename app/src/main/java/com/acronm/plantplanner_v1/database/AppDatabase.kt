@@ -12,8 +12,11 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.acronm.plantplanner_v1.model.Links
 
- @Database(entities = [AppDatabase.Plant::class], version = 1)
+@Database(entities = [AppDatabase.Plant::class], version = 2)
     abstract class AppDatabase : RoomDatabase() {
      abstract fun plantsDao(): PlantsDao
 
@@ -27,23 +30,26 @@ import androidx.room.RoomDatabase
                          context.applicationContext,
                          AppDatabase::class.java,
                          "plants.db"
-                     ).build()
+                     ).fallbackToDestructiveMigration()
+                         .build()
                  }
              }
              return INSTANCE!!
          }
+
      }
 
-     @Entity(tableName = "plants", indices = [Index(value = ["name"], unique = true)])
+     @Entity(tableName = "plants", indices = [Index(value = ["common_name"], unique = true)])
      data class Plant(
          @PrimaryKey(autoGenerate = true) val id: Int,
-         val name: String,
+         val common_name: String,
          val description: String,
          var wateringInterval: Int,
          val sunlight: String,
-         val image: String,
-         val createdTimeStamp: Long,
-         val modifiedTimestamp: Long
+         val image_url: String,
+         val scientific_name: String? = null,
+         val createdTimeStamp: Long? = null,
+         val modifiedTimestamp: Long? = null
      )
 
      @Dao
@@ -54,13 +60,10 @@ import androidx.room.RoomDatabase
          @Query("SELECT * FROM plants")
             fun getAllLiveData(): LiveData<List<Plant>>
 
-         @Query("SELECT MAX(id) FROM plants")
-         fun getMaxId(): Int
-
          @Query("SELECT * FROM plants WHERE id IN (:plantIds)")
          fun loadAllByIds(plantIds: IntArray): List<Plant>
 
-         @Query("SELECT * FROM plants WHERE name LIKE :name LIMIT 1")
+         @Query("SELECT * FROM plants WHERE common_name LIKE :name LIMIT 1")
          fun findByName(name: String): Plant
 
          @Insert

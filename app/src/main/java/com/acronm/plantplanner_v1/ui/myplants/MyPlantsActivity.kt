@@ -110,7 +110,7 @@ class MyPlants : ComponentActivity() {
                             }
                             items(plants.orEmpty()) { plant ->
                                 Row {
-                                    Text(text = plant.name)
+                                    Text(text = plant.common_name)
                                     IconButton(onClick = {
                                         viewModel.deletePlant(plant)
                                     }) {
@@ -290,11 +290,11 @@ fun PlantForm(onSavePlant: (AppDatabase.Plant) -> Unit, onDismiss: () -> Unit, v
                     onClick = {
                         val plant = AppDatabase.Plant(
                             id = id.value,
-                            name = name.value,
+                            common_name = name.value,
                             description = description.value,
                             wateringInterval = wateringInterval.value.toIntOrNull() ?: 0,
                             sunlight = sunlight.value,
-                            image = image.value,
+                            image_url = image.value,
                             createdTimeStamp = System.currentTimeMillis(),
                             modifiedTimestamp = System.currentTimeMillis()
                         )
